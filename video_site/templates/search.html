@@ -1,0 +1,8 @@
+<form method="post">
+<input name="name" placeholder="search user">
+<button>Search</button>
+</form>
+
+{% for u in users %}
+<a href="/profile/{{u}}">@{{u}}</a><br>
+{% endfor %}

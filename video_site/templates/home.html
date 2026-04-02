@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+body{margin:0;background:black;color:white;font-family:Arial;}
+.video-box{height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;}
+video{border-radius:15px;}
+.btn{padding:8px;margin:5px;background:#222;color:white;border:none;border-radius:10px;}
+.nav{position:fixed;bottom:0;width:100%;display:flex;justify-content:space-around;background:#111;padding:10px;}
+</style>
+</head>
+
+<body>
+
+{% for user,video,info in videos %}
+<div class="video-box" id="video{{loop.index}}">
+<h3>@{{user}}</h3>
+
+<video controls loop class="vid" height="400">
+<source src="{{ url_for('static', filename='videos/' ~ user ~ '/' ~ video) }}">
+</video>
+
+<p>❤️ {{info.likes}}</p>
+
+<a href="/like/{{user}}/{{video}}?pos=video{{loop.index}}">
+<button class="btn">
+{% if session['user'] in info.liked_by %}💔 Unlike{% else %}❤️ Like{% endif %}
+</button>
+</a>
+
+<a href="/save/{{user}}/{{video}}?pos=video{{loop.index}}">
+<button class="btn">🔖 Save</button>
+</a>
+
+<form action="/comment/{{user}}/{{video}}" method="post">
+<input type="hidden" name="pos" value="video{{loop.index}}">
+<input name="text" placeholder="comment">
+<button class="btn">Send</button>
+</form>
+
+{% for c in info.comments %}
+<p>{{c}}</p>
+{% endfor %}
+
+</div>
+{% endfor %}
+
+<div class="nav">
+<a href="/home">🏠</a>
+<a href="/following">👥</a>
+<a href="/search">🔍</a>
+<a href="/saved">🔖</a>
+<a href="/myprofile">👤</a>
+<a href="/settings">⚙️</a>
+</div>
+
+</body>
+</html>

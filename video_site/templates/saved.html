@@ -1,0 +1,7 @@
+<h2>Saved Videos</h2>
+
+{% for u,v in videos %}
+<video width="300" controls>
+<source src="{{ url_for('static', filename='videos/' ~ u ~ '/' ~ v) }}">
+</video>
+{% endfor %}

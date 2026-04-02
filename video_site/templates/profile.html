@@ -1,0 +1,16 @@
+<h2>@{{user}}</h2>
+<p>{{bio}}</p>
+
+<p>{{followers}} followers | {{following}} following</p>
+
+{% if user != session['user'] %}
+<a href="/follow/{{user}}">Follow</a>
+{% else %}
+<a href="/edit_profile">Edit Profile</a>
+{% endif %}
+
+{% for v in videos %}
+<video width="300" controls>
+<source src="{{ url_for('static', filename='videos/' ~ user ~ '/' ~ v) }}">
+</video>
+{% endfor %}
